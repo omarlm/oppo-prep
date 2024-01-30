@@ -8,7 +8,7 @@ export const getRandomQuestions = async (category) => {
         if (data) {
             const randomizedData = shuffleArray(data)
 
-            const limitedData = randomizedData.slice(0, 2)
+            const limitedData = randomizedData.slice(0, 20)
 
             // const dataWithRandomizedOptions = limitedData.map((item) => {
             //     const randomizedOptions = shuffleOptions(item.options);
