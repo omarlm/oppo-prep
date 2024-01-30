@@ -2,7 +2,7 @@ import React from 'react'
 
 const Card = ({ title, description, path, svg }) => {
     return (
-        <div className="p-4 sm:p-0">
+        <div className="sm:p-0">
             <a href={path} className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full ">
                 <div className="p-6">
                     {svg}

@@ -12,7 +12,7 @@ const Navbar = () => {
                             <Link to="/">
                                 <img
                                     className="lg:block size-24 w-auto"
-                                    src="./oppoPrep-logo.png"
+                                    src="./oppo-prep-logo.png"
                                     alt="Your Logo"
                                 />
                             </Link>
