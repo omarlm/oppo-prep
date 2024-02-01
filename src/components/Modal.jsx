@@ -7,22 +7,29 @@ const Modal = ({ show, onClose, score, total }) => {
     }
 
     return (
-        <div className="fixed inset-0 px-4 flex justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-            <div className="w-full max-w-md bg-white shadow-lg rounded-md px-5 py-10 relative mx-auto text-center">
+        <div className="fixed inset-0 z-[1000] flex h-full w-full items-center justify-center overflow-auto px-4 font-[sans-serif] before:fixed before:inset-0 before:h-full before:w-full before:bg-[rgba(0,0,0,0.5)]">
+            <div className="relative mx-auto w-full max-w-md rounded-md bg-white px-5 py-10 text-center shadow-lg">
                 <button
                     type="button"
-                    className="absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                    className="absolute right-4 top-4 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200"
                     onClick={onClose}
                 >
-                    <X className={"size-5"} />
+                    <X className={'size-5'} />
                 </button>
 
                 <div className="mt-8">
-                    <h3 className="text-2xl font-semibold flex-1">Tu puntuación</h3>
-                    <p className="text-lg font-bold text-blue-600 mt-2">{score} / {total}</p>
-                    <p className="text-sm text-gray-500 mt-2">Comprueba tus respuestas. 😊</p>
-                    <button type="button"
-                        className="px-6 py-2.5 mt-8 w-full rounded text-white text-sm font-semibold border-none outline-none bg-blue-500 hover:bg-blue-600"
+                    <h3 className="flex-1 text-2xl font-semibold">
+                        Tu puntuación
+                    </h3>
+                    <p className="mt-2 text-lg font-bold text-blue-600">
+                        {score} / {total}
+                    </p>
+                    <p className="mt-2 text-sm text-gray-500">
+                        Comprueba tus respuestas. 😊
+                    </p>
+                    <button
+                        type="button"
+                        className="mt-8 w-full rounded border-none bg-blue-500 px-6 py-2.5 text-sm font-semibold text-white outline-none hover:bg-blue-600"
                         onClick={onClose}
                     >
                         Entendido
@@ -30,7 +37,6 @@ const Modal = ({ show, onClose, score, total }) => {
                 </div>
             </div>
         </div>
-
     )
 }
 

@@ -14,14 +14,13 @@ export const getRandomQuestions = async (category) => {
             //     const randomizedOptions = shuffleOptions(item.options);
             //     return { ...item, options: randomizedOptions };
             // });
-            return limitedData;
+            return limitedData
         } else {
-            console.error("Data is null or undefined.")
+            console.error('Data is null or undefined.')
             return null
         }
     } catch (error) {
-        console.error("Error loading JSON data:", error)
+        console.error('Error loading JSON data:', error)
         return null
     }
-};
-
+}
