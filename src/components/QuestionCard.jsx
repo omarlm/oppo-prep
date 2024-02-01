@@ -28,7 +28,7 @@ const QuestionCard = ({
                                 disabled={checked}
                                 className="form-radio h-4 w-4"
                             />
-                            <span className="text-sm font-medium">{`${key}) ${value}`}</span>
+                            <span className="text-sm font-sm"><span className='text-[#2b2c34] font-bold'>{`${key})`}</span> {`${value}`}</span>
                         </label>
                     </li>
                 ))}
