@@ -43,8 +43,8 @@ const QuestionCard = ({
                     }
                 >
                     {userAnswer === correctAnswer
-                        ? 'Respuesta Correcta'
-                        : `Respuesta Incorrecta. La correcta es: ${correctAnswer}`}
+                        ? 'Respuesta correcta'
+                        : `Respuesta incorrecta. La pregunta correcta es: ${correctAnswer}`}
                 </p>
             )}
         </div>

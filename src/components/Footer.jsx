@@ -33,7 +33,7 @@ const Footer = () => {
                                 href="https://www.netlify.com/"
                                 className="font-bold text-[#6246ea] hover:underline"
                             >
-                                Netlify.
+                                Netlify.{' '}
                             </a>
                             Podrás encontrar el código en el repositorio de{' '}
                             <a
