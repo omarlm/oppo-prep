@@ -57,7 +57,9 @@ const SocialWork = () => {
 
     return (
         <>
-            <h1 className="mx-4 my-4 text-4xl">Trabajador/a Social</h1>
+            <h1 className="mx-4 my-4 text-3xl font-semibold text-[#2b2c34]">
+                Trabajador/a Social
+            </h1>
             {data.map((item, index) => (
                 <QuestionCard
                     key={index}
@@ -74,7 +76,7 @@ const SocialWork = () => {
                     type="button"
                     className={`w-full rounded border-none px-6 py-2.5 text-sm font-semibold text-white outline-none ${
                         allAnswered
-                            ? 'bg-blue-500 hover:bg-blue-600'
+                            ? 'bg-[#6246ea] hover:bg-[#4f39c0]'
                             : 'cursor-not-allowed bg-gray-500'
                     }`}
                     onClick={checkAnswers}

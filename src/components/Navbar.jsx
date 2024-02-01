@@ -3,24 +3,20 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     return (
-        <nav className="text-blue-500">
+        <nav>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="relative flex h-16 items-center justify-between">
-                    {/* Logo */}
-                    <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-start">
+                <div className="relative flex h-16 items-center justify-center lg:justify-start">
+                    <div className="flex items-center justify-start">
                         <div className="flex flex-shrink-0 items-center">
-                            <Link to="/">
-                                <img
-                                    className="size-24 w-auto lg:block"
-                                    src="./oppo-prep-logo.png"
-                                    alt="Your Logo"
-                                />
+                            <Link to="/" className="flex items-center">
+                                <span className="text-2xl font-bold text-[#2b2c34]">
+                                    Opposer
+                                </span>
                             </Link>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="border-b border-gray-300/100"></div>
         </nav>
     )
 }

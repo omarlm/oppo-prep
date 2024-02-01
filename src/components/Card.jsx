@@ -5,16 +5,21 @@ const Card = ({ title, description, path, svg }) => {
         <div className="sm:p-0">
             <a
                 href={path}
-                className="relative mt-6 flex w-full flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md "
+                className="relative mt-6 flex w-full flex-col bg-[#d1d1e9] bg-clip-border"
             >
-                <div className="p-6">
-                    {svg}
-                    <h5 className="text-blue-gray-900 mb-2 font-sans text-xl font-semibold leading-snug tracking-normal">
-                        {title}
-                    </h5>
-                    <p className="font-sans text-base font-light leading-relaxed text-inherit">
-                        {description}
-                    </p>
+                <div className="flex items-center p-4">
+                    <div className="flex items-center justify-center rounded border-2 border-[#2b2c34] bg-[#fffffe] p-4">
+                        {svg}
+                    </div>
+                    <div className="ml-4 flex flex-col justify-center">
+                        <h2 className="mb-2 text-3xl font-medium leading-snug tracking-normal text-[#2b2c34]">
+                            {title}
+                        </h2>
+                    </div>
+                </div>
+
+                <div className="px-6 py-2">
+                    <p className="text-sm !text-[#2b2c34]">{description}</p>
                 </div>
             </a>
         </div>

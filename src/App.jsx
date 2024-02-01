@@ -12,11 +12,8 @@ function App() {
     return (
         <Router>
             <div className="flex min-h-screen flex-col">
-                <Navbar />
+                <Navbar />                
                 <div className="container mx-auto max-w-3xl flex-1 p-4">
-                    <h1 className="text-4xl font-bold">
-                        Preguntas para oposiciones del Gobierno de Canarias
-                    </h1>
                     <Routes>
                         <Route
                             exact
@@ -25,15 +22,15 @@ function App() {
                                 <div className="space-y-4">
                                     <Card
                                         title="Logopedia"
-                                        description="Preguntas actualizadas para oposiciones de Logopedia del Gobierno de Canarias."
+                                        description="Preguntas actualizadas para las oposiciones de Logopedia del Gobierno de Canarias."
                                         path="/speech-therapy"
-                                        svg={<Speech />}
+                                        svg={<Speech size={50} stroke='#6246ea'/>}
                                     />
                                     <Card
                                         title="Trabajador/a Social"
-                                        description="Preguntas recientes para aspirantes a Trabajo Social en las oposiciones del Gobierno de Canarias."
+                                        description="Preguntas actualizadas para las oposiciones a Trabajador/a Social del Gobierno de Canarias"
                                         path="/social-work"
-                                        svg={<Briefcase />}
+                                        svg={<Briefcase size={50} stroke='#6246ea'/>}
                                     />
                                 </div>
                             }

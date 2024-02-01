@@ -13,11 +13,11 @@ const QuestionCard = ({
     }
 
     return (
-        <div className="mx-4 my-4 text-pretty border p-4">
+        <div className="mx-4 my-4 text-pretty border bg-[#d1d1e9] p-4">
             <h3 className="font-bold">{question}</h3>
             <ul>
                 {Object.entries(options).map(([key, value]) => (
-                    <li key={key} className="mb-2">
+                    <li key={key} className="my-3">
                         <label className="flex items-center space-x-2 text-sm md:text-base">
                             <input
                                 type="radio"
@@ -28,7 +28,7 @@ const QuestionCard = ({
                                 disabled={checked}
                                 className="form-radio h-4 w-4"
                             />
-                            <span>{`${key}) ${value}`}</span>
+                            <span className="text-sm font-medium">{`${key}) ${value}`}</span>
                         </label>
                     </li>
                 ))}
@@ -38,8 +38,8 @@ const QuestionCard = ({
                 <p
                     className={
                         userAnswer === correctAnswer
-                            ? 'mt-2 border-green-500 bg-green-100 text-green-700'
-                            : 'mt-2 border-red-500 bg-red-100 text-red-700'
+                            ? 'mt-2 border-green-500 bg-green-100 p-2 font-bold text-green-700'
+                            : 'mt-2 border-red-500 bg-red-100 p-2 font-bold text-red-700'
                     }
                 >
                     {userAnswer === correctAnswer
