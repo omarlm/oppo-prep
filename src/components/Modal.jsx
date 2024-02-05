@@ -21,19 +21,19 @@ const Modal = ({ show, onClose, score, total }) => {
                     <h3 className="flex-1 text-2xl font-semibold text-[#2b2c34]">
                         Tu puntuación ha sido de:
                     </h3>
-                    <p className="mt-2 text-lg font-bold text-[#6246ea]">
+                    <p className="mt-2 text-lg font-bold text-vibrant-purple">
                         {score} / {total}
                     </p>
                     <p className="mt-2 font-medium text-[#2b2c34]">
                         No olvides de comprobar tus respuestas una vez que{' '}
-                        <span className="font-bold text-[#e45858]">
+                        <span className="font-bold text-warm-tan">
                             cierres
                         </span>{' '}
                         la ventana. 😊
                     </p>
                     <button
                         type="button"
-                        className="mt-8 w-full rounded border-none bg-[#6246ea] px-6 py-2.5 text-sm font-semibold text-white outline-none"
+                        className="mt-8 w-full rounded border-none bg-vibrant-purple px-6 py-2.5 text-sm font-semibold text-white outline-none"
                         onClick={onClose}
                     >
                         Entendido

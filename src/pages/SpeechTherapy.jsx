@@ -87,7 +87,7 @@ const SpeechTherapy = () => {
 
     return (
         <>
-            <h1 className="mx-4 my-4 text-3xl font-semibold text-[#2b2c34]">
+            <h1 className="mx-4 mb-6 font-news-cycle text-6xl font-bold bg-gradient-to-r from-vibrant-purple to-soft-peach bg-clip-text text-transparent leading-relaxed">
                 Logopedia
             </h1>
             {data.map((item, index) => (
@@ -101,18 +101,17 @@ const SpeechTherapy = () => {
                     onAnswerSelect={(answer) => handleAnswer(index, answer)}
                 />
             ))}
-            <div className="mx-4 my-4 flex flex-col justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+            <div className="m-4 flex flex-col justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 font-nunito-sans">
                 <button
                     type="button"
-                    className={`w-full rounded border-none px-6 py-2.5 text-sm font-semibold text-white outline-none ${
-                        allAnswered
-                            ? 'bg-[#6246ea] hover:bg-[#4f39c0]'
-                            : 'cursor-not-allowed bg-gray-500'
-                    }`}
+                    className={`w-full rounded border-none px-6 py-2.5 text-md font-semibold text-white outline-none ${allAnswered
+                        ? 'bg-vibrant-purple hover:bg-vibrant-purple/70'
+                        : 'cursor-not-allowed bg-gray-500'
+                        }`}
                     onClick={checkAnswers}
                     disabled={!allAnswered}
                 >
-                    Verificar Respuestas
+                    Verificar respuestas
                 </button>
 
                 <Modal
@@ -124,10 +123,10 @@ const SpeechTherapy = () => {
 
                 <button
                     type="button"
-                    className="mt-8 w-full rounded border-none bg-teal-500 px-6 py-2.5 text-sm font-semibold text-white outline-none hover:bg-teal-600"
+                    className="mt-8 w-full rounded border-none bg-soft-peach px-6 py-2.5 text-md font-semibold text-white outline-none hover:bg-soft-peach/80"
                     onClick={refreshQuestions}
                 >
-                    Refrescar Preguntas
+                    Refrescar preguntas
                 </button>
             </div>
         </>

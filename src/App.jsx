@@ -8,11 +8,15 @@ import Footer from './components/Footer'
 import SpeechTherapy from './pages/SpeechTherapy'
 import SocialWork from './pages/SocialWork'
 
+import '@fontsource/news-cycle';
+import '@fontsource-variable/oswald';
+import '@fontsource-variable/nunito-sans';
+
 function App() {
     return (
         <Router>
             <div className="flex min-h-screen flex-col">
-                <Navbar />                
+                <Navbar />
                 <div className="container mx-auto max-w-3xl flex-1 p-4">
                     <Routes>
                         <Route
@@ -24,13 +28,13 @@ function App() {
                                         title="Logopedia"
                                         description="Preguntas actualizadas para las oposiciones de Logopedia del Gobierno de Canarias."
                                         path="/speech-therapy"
-                                        svg={<Speech size={50} stroke='#6246ea'/>}
+                                        svg={<Speech size={30} stroke='#A848C1' />}
                                     />
                                     <Card
                                         title="Trabajador/a Social"
                                         description="Preguntas actualizadas para las oposiciones a Trabajador/a Social del Gobierno de Canarias"
                                         path="/social-work"
-                                        svg={<Briefcase size={50} stroke='#6246ea'/>}
+                                        svg={<Briefcase size={30} stroke='#A848C1' />}
                                     />
                                 </div>
                             }

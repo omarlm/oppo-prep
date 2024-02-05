@@ -11,6 +11,9 @@
         "format": "prettier --loglevel warn --write \"{src/components,src/pages,src/services,src/utils}/**/*.{jsx,js}\""
     },
     "dependencies": {
+        "@fontsource-variable/nunito-sans": "^5.0.9",
+        "@fontsource-variable/oswald": "^5.0.18",
+        "@fontsource/news-cycle": "^5.0.18",
         "autoprefixer": "^10.4.17",
         "lucide-react": "^0.315.0",
         "postcss": "^8.4.33",

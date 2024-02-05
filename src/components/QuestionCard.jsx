@@ -13,8 +13,8 @@ const QuestionCard = ({
     }
 
     return (
-        <div className="mx-4 my-4 text-pretty border bg-[#d1d1e9] p-4">
-            <h3 className="font-bold">{question}</h3>
+        <div className="font-nunito-sans m-4 text-pretty border bg-soft-peach/20 p-4 rounded-lg">
+            <h3 className="font-oswald font-bold">{question}</h3>
             <ul>
                 {Object.entries(options).map(([key, value]) => (
                     <li key={key} className="my-3">
@@ -26,9 +26,12 @@ const QuestionCard = ({
                                 onChange={handleAnswerChange}
                                 checked={userAnswer === key}
                                 disabled={checked}
-                                className="form-radio h-4 w-4"
+                                className="h-4 w-4"
                             />
-                            <span className="text-sm font-sm"><span className='text-[#2b2c34] font-bold'>{`${key})`}</span> {`${value}`}</span>
+                            <span className="text-md">
+                                <span className='text-[#2b2c34] font-bold'>{`${key})`} </span>
+                                {`${value}`}
+                            </span>
                         </label>
                     </li>
                 ))}
