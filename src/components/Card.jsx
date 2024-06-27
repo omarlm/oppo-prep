@@ -1,29 +1,31 @@
-import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-const Card = ({ title, description, path, svg }) => {
+const Card = ({ title, description, path }) => {
     return (
-        <div className="sm:p-0">
-            <a
-                href={path}
-                className="relative flex w-full flex-col bg-soft-peach/40 bg-clip-border rounded-xl"
-            >
-                <div className="flex items-center p-4">
-                    <div className="flex items-center justify-center rounded-full border-2 border-text bg-light-background p-4">
-                        {svg}
-                    </div>
-                </div>
-                <div className="ml-4 flex flex-col justify-center">
-                    <h2 className="text-2xl font-oswald font-medium leading-snug tracking-normal text-dark">
-                        {title}
-                    </h2>
-                </div>
-
-                <div className="px-4 py-2">
-                    <p className="text-sm text-dark font-nunito-sans">{description}</p>
-                </div>
-            </a>
+        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md m-4">
+            <div className="block mb-2">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 flex items-center font-serif">
+                    {title}
+                </h5>
+            </div>
+            <p className="mb-3 font-normal text-gray-700 font-sans">
+                {description}
+            </p>
+            <Link to={path} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-sans">
+                Empezar test
+                <svg className="rtl:rotate-180 w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </Link>
         </div>
     )
+}
+
+Card.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired
 }
 
 export default Card

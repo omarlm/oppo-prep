@@ -1,4 +1,4 @@
-import { shuffleArray, shuffleOptions } from '../utils/utils'
+import { shuffleArray } from '../utils/utils'
 
 export const getRandomQuestions = async (category) => {
     try {
@@ -8,13 +8,7 @@ export const getRandomQuestions = async (category) => {
         if (data) {
             const randomizedData = shuffleArray(data)
 
-            const limitedData = randomizedData.slice(0, 20)
-
-            // const dataWithRandomizedOptions = limitedData.map((item) => {
-            //     const randomizedOptions = shuffleOptions(item.options);
-            //     return { ...item, options: randomizedOptions };
-            // });
-            return limitedData
+            return randomizedData.slice(0, 20)
         } else {
             console.error('Data is null or undefined.')
             return null

@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .max-w-custom {
+        max-width: 750px;
+    }
+}
+
 body {
-    background-color: #FBF7FC;
+    background-color: #fafafa;
 }
 
 html {

@@ -13,10 +13,13 @@
     "dependencies": {
         "@fontsource-variable/nunito-sans": "^5.0.9",
         "@fontsource-variable/oswald": "^5.0.18",
+        "@fontsource/merriweather": "^5.0.13",
         "@fontsource/news-cycle": "^5.0.18",
+        "@fontsource/roboto": "^5.0.13",
         "autoprefixer": "^10.4.17",
         "lucide-react": "^0.315.0",
         "postcss": "^8.4.33",
+        "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.21.3",
