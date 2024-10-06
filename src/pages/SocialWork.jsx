@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getRandomQuestions } from '../services/dataService'
 import QuestionCard from '../components/QuestionCard'
 import Modal from '../components/Modal'
@@ -15,24 +15,22 @@ const SocialWork = () => {
     const [isLoading, setLoading] = useState(false)
     const [numQuestions, setNumQuestions] = useState(5) // Número de preguntas por defecto
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-
-            const data = await getRandomQuestions('questions_social_worker', numQuestions)
-            if (data) {
-                setData(data)
-                setLoading(false)
-
-                setAnswers(
-                    data.reduce((acc, _, index) => ({ ...acc, [index]: null }), {})
-                )
-                setChecked(false)
-            }
+    const fetchData = useCallback(async () => {
+        setLoading(true)
+        const data = await getRandomQuestions('questions_social_worker', numQuestions)
+        if (data) {
+            setData(data)
+            setLoading(false)
+            setAnswers(
+                data.reduce((acc, _, index) => ({ ...acc, [index]: null }), {})
+            )
+            setChecked(false)
         }
-
-        fetchData()
     }, [numQuestions])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
 
     const handleAnswer = (index, answer) => {
         setAnswers((prev) => ({ ...prev, [index]: answer }))
@@ -51,6 +49,7 @@ const SocialWork = () => {
     }
 
     const refreshQuestions = () => {
+        fetchData()
         scrollToTop()
     }
 
@@ -76,6 +75,17 @@ const SocialWork = () => {
                 Trabajador/a Social
             </h1>
 
+            {/* Botón para imprimir preguntas al principio */}
+            <div className="mb-4 avoid-print">
+                <button
+                    type="button"
+                    className="w-full rounded-lg px-6 py-3 text-lg font-semibold text-blue-600 border border-blue-600 hover:bg-blue-50"
+                    onClick={printQuestions}
+                >
+                    Print Questions
+                </button>
+            </div>
+
             {/* Uso del componente QuestionSelector */}
             <QuestionSelector
                 numQuestions={numQuestions}
@@ -92,12 +102,12 @@ const SocialWork = () => {
                         userAnswer={answers[index]}
                         checked={checked}
                         onAnswerSelect={(answer) => handleAnswer(index, answer)}
-                        className={`rounded-lg border border-gray-300 p-4 ${index !== 0 ? 'mt-6' : ''}`}
+                        className={`avoid-page-break rounded-lg border border-gray-300 p-4 ${index !== 0 ? 'mt-6' : ''}`}
                     />
                 ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 avoid-print">
                 <button
                     type="button"
                     className={`w-full rounded-lg px-6 py-3 text-lg font-semibold text-white ${allAnswered
@@ -123,15 +133,6 @@ const SocialWork = () => {
                     onClick={refreshQuestions}
                 >
                     Refrescar preguntas
-                </button>
-
-                {/* Botón para imprimir preguntas */}
-                <button
-                    type="button"
-                    className="w-full rounded-lg px-6 py-3 text-lg font-semibold text-blue-600 border border-blue-600 hover:bg-blue-50 mt-6"
-                    onClick={printQuestions}
-                >
-                    Imprimir preguntas
                 </button>
             </div>
         </div>
