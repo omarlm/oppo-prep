@@ -1,18 +1,20 @@
+import PropTypes from 'prop-types'
+
 const QuestionCard = ({
-                          question,
-                          options,
-                          correctAnswer,
-                          userAnswer,
-                          checked,
-                          onAnswerSelect,
-                          className,
-                      }) => {
+    question,
+    options,
+    correctAnswer,
+    userAnswer,
+    checked,
+    onAnswerSelect,
+    className,
+}) => {
     const handleAnswerChange = (event) => {
         onAnswerSelect(event.target.value)
     }
 
     return (
-        <div className={`rounded-lg border border-gray-300 ${className}`}>
+        <div className={`avoid-page-break rounded-lg border border-gray-300 ${className}`}>
             <div className="bg-blue-100 p-2 rounded-t-lg">
                 <h3 className="text-lg font-semibold">{question}</h3>
             </div>
@@ -57,6 +59,16 @@ const QuestionCard = ({
             )}
         </div>
     )
+}
+
+QuestionCard.propTypes = {
+    question: PropTypes.string.isRequired,
+    options: PropTypes.object.isRequired,
+    correctAnswer: PropTypes.string.isRequired,
+    userAnswer: PropTypes.string,
+    checked: PropTypes.bool.isRequired,
+    onAnswerSelect: PropTypes.func.isRequired,
+    className: PropTypes.string, // className es opcional, por eso no lleva isRequired
 }
 
 export default QuestionCard

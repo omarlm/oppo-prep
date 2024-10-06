@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getRandomQuestions } from '../services/dataService'
 import QuestionCard from '../components/QuestionCard'
 import Modal from '../components/Modal'
 import { scrollToTop } from '../utils/utils'
 import { Loading } from '../components/Loading.jsx'
+import QuestionSelector from '../components/QuestionSelector'
 
 const SpeechTherapy = () => {
     const [data, setData] = useState([])
@@ -12,14 +13,11 @@ const SpeechTherapy = () => {
     const [showModal, setShowModal] = useState(false)
     const [score, setScore] = useState(0)
     const [isLoading, setLoading] = useState(false)
+    const [numQuestions, setNumQuestions] = useState(5) // Número de preguntas por defecto
 
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true)
-        const data = await getRandomQuestions('questions_speech_therapy')
+        const data = await getRandomQuestions('questions_speech_therapy', numQuestions)
         if (data) {
             setData(data)
             setLoading(false)
@@ -28,7 +26,11 @@ const SpeechTherapy = () => {
             )
             setChecked(false)
         }
-    }
+    }, [numQuestions])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
 
     const handleAnswer = (index, answer) => {
         setAnswers((prev) => ({ ...prev, [index]: answer }))
@@ -55,10 +57,12 @@ const SpeechTherapy = () => {
         setShowModal(false)
     }
 
+    const printQuestions = () => {
+        window.print()
+    }
+
     if (isLoading) {
-        return (
-            <Loading />
-        )
+        return <Loading />
     }
 
     const allAnswered =
@@ -70,7 +74,25 @@ const SpeechTherapy = () => {
             <h1 className="text-4xl font-extrabold text-center mb-8">
                 Logopedia
             </h1>
-            <div>
+
+            {/* Botón para imprimir preguntas al principio */}
+            <div className="mb-4">
+                <button
+                    type="button"
+                    className="w-full rounded-lg px-6 py-3 text-lg font-semibold text-blue-600 border border-blue-600 hover:bg-blue-50"
+                    onClick={printQuestions}
+                >
+                    Imprimir preguntas
+                </button>
+            </div>
+
+            {/* Uso del componente QuestionSelector */}
+            <QuestionSelector
+                numQuestions={numQuestions}
+                onNumQuestionsChange={setNumQuestions}
+            />
+
+            <div id="questions-section">
                 {data.map((item, index) => (
                     <QuestionCard
                         key={index}
@@ -80,17 +102,18 @@ const SpeechTherapy = () => {
                         userAnswer={answers[index]}
                         checked={checked}
                         onAnswerSelect={(answer) => handleAnswer(index, answer)}
-                        className={`rounded-lg border border-gray-300 p-4 ${index !== 0 ? 'mt-6' : ''}`}
+                        className={`avoid-page-break rounded-lg border border-gray-300 p-4 ${index !== 0 ? 'mt-6' : ''}`}
                     />
                 ))}
             </div>
+
             <div className="mt-8">
                 <button
                     type="button"
                     className={`w-full rounded-lg px-6 py-3 text-lg font-semibold text-white ${allAnswered
                         ? 'bg-blue-600 hover:bg-blue-500'
                         : 'cursor-not-allowed bg-gray-400'
-                    }`}
+                        }`}
                     onClick={checkAnswers}
                     disabled={!allAnswered}
                 >

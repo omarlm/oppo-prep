@@ -15,3 +15,25 @@ body {
 html {
     scroll-behavior: smooth;
 }
+
+@media print {
+    .avoid-page-break {
+        page-break-inside: avoid;
+    }
+
+    .title {
+        display: none;
+    }
+
+    button {
+        display: none;
+    }
+
+    select {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+}
