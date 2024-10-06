@@ -82,7 +82,7 @@ const SocialWork = () => {
                     className="w-full rounded-lg px-6 py-3 text-lg font-semibold text-blue-600 border border-blue-600 hover:bg-blue-50"
                     onClick={printQuestions}
                 >
-                    Print Questions
+                    Imprimir preguntas
                 </button>
             </div>
 
