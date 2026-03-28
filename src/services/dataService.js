@@ -1,4 +1,6 @@
-import { shuffleArray } from '../utils/utils'
+import { shuffleArray, shuffleOptions } from '../utils/utils'
+
+const cleanQuestion = (text) => text.replace(/^\d+\.\s*/, '')
 
 export const getRandomQuestions = async (category, numQuestions = 20) => {
     try {
@@ -7,9 +9,22 @@ export const getRandomQuestions = async (category, numQuestions = 20) => {
 
         if (data) {
             const randomizedData = shuffleArray(data)
+                .slice(0, numQuestions)
+                .map((q, i) => {
+                    const { options, correctAnswer } = shuffleOptions(
+                        q.options,
+                        q.correct_answer
+                    )
+                    return {
+                        ...q,
+                        id: `q-${i}-${q.question.substring(0, 40)}`,
+                        question: cleanQuestion(q.question),
+                        options,
+                        correct_answer: correctAnswer,
+                    }
+                })
 
-            // Devolver solo el número de preguntas seleccionadas
-            return randomizedData.slice(0, numQuestions)
+            return randomizedData
         } else {
             console.error('Data is null or undefined.')
             return null

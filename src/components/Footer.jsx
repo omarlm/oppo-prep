@@ -1,53 +1,31 @@
-import PropTypes from 'prop-types'
-
-const Footer = ({ className }) => {
+const Footer = () => {
     return (
-        <footer className={`text-xs py-4 ${className}`}>
-            <div className="text-center font-sans">
-                <p>
-                    Desarrollado en{' '}
-                    <a
-                        href="https://react.dev/"
-                        className="text-blue-400 hover:text-blue-600 font-bold"
-                    >
-                        React{' '}
-                    </a>
-                    con{' '}
-                    <a
-                        href="https://tailwindcss.com/"
-                        className="text-blue-400 hover:text-blue-600 font-bold"
-                    >
-                        TailwindCSS
-                    </a>
-                    . Codificado en{' '}
-                    <a
-                        href="https://www.jetbrains.com/webstorm/"
-                        className="text-blue-400 hover:text-blue-600 font-bold"
-                    >
-                        WebStorm{' '}
-                    </a>
-                    y desplegado en{' '}
-                    <a
-                        href="https://www.netlify.com/"
-                        className="text-blue-400 hover:text-blue-600 font-bold"
-                    >
-                        Netlify.{' '}
-                    </a>
-                    Podrás encontrar el código en el repositorio de{' '}
-                    <a
-                        href="https://github.com/omarlm/oppo-prep"
-                        className="text-blue-400 hover:text-blue-600 font-bold"
-                    >
-                        GitHub.
-                    </a>
-                </p>
-            </div>
+        <footer className="no-print border-t border-slate-200 py-4">
+            <p className="text-center text-xs text-slate-400">
+                Desarrollado con{' '}
+                <a
+                    href="https://react.dev/"
+                    className="font-medium text-slate-500 hover:text-indigo-600"
+                >
+                    React
+                </a>{' '}
+                y{' '}
+                <a
+                    href="https://tailwindcss.com/"
+                    className="font-medium text-slate-500 hover:text-indigo-600"
+                >
+                    TailwindCSS
+                </a>
+                . Código en{' '}
+                <a
+                    href="https://github.com/omarlm/oppo-prep"
+                    className="font-medium text-slate-500 hover:text-indigo-600"
+                >
+                    GitHub
+                </a>
+            </p>
         </footer>
     )
-}
-
-Footer.propTypes = {
-    className: PropTypes.string,
 }
 
 export default Footer

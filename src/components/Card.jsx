@@ -1,31 +1,31 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 
 const Card = ({ title, description, path }) => {
     return (
-        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md m-4">
-            <div className="block mb-2">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 flex items-center font-serif">
-                    {title}
-                </h5>
-            </div>
-            <p className="mb-3 font-normal text-gray-700 font-sans">
+        <Link
+            to={path}
+            className="group block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-indigo-200 hover:shadow-md"
+        >
+            <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600">
+                {title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-slate-500">
                 {description}
             </p>
-            <Link to={path} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-sans">
+            <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600">
                 Empezar test
-                <svg className="rtl:rotate-180 w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                </svg>
-            </Link>
-        </div>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </div>
+        </Link>
     )
 }
 
 Card.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired
+    path: PropTypes.string.isRequired,
 }
 
 export default Card

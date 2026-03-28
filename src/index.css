@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    .max-w-custom {
-        max-width: 750px;
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-800;
     }
 }
 
-body {
-    background-color: #fafafa;
-}
-
-html {
-    scroll-behavior: smooth;
+@layer utilities {
+    .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
 }
 
 @media print {
@@ -21,19 +25,18 @@ html {
         page-break-inside: avoid;
     }
 
-    .title {
-        display: none;
+    .no-print {
+        display: none !important;
     }
 
-    button {
-        display: none;
+    button,
+    select,
+    footer,
+    nav {
+        display: none !important;
     }
 
-    select {
-        display: none;
-    }
-
-    footer {
-        display: none;
+    body {
+        background: white;
     }
 }

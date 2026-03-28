@@ -1,41 +1,63 @@
 import PropTypes from 'prop-types'
-import { X } from 'lucide-react'
+import { X, Trophy } from 'lucide-react'
 
 const Modal = ({ show, onClose, score, total }) => {
     if (!show) {
         return null
     }
 
+    const percentage = Math.round((score / total) * 100)
+    const isGood = percentage >= 70
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-sm w-full mx-auto">
-                <div className="flex justify-end">
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Resultado del test"
+        >
+            <div className="relative mx-4 w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-xl">
+                <div
+                    className={`px-6 pb-2 pt-6 text-center ${isGood ? 'bg-emerald-50' : 'bg-slate-50'}`}
+                >
                     <button
                         type="button"
-                        className="text-gray-500 hover:text-gray-700"
+                        className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-600"
                         onClick={onClose}
+                        aria-label="Cerrar"
                     >
-                        <X className="w-6 h-6" />
+                        <X className="h-5 w-5" />
                     </button>
+
+                    <Trophy
+                        className={`mx-auto h-10 w-10 ${isGood ? 'text-emerald-500' : 'text-slate-400'}`}
+                    />
+                    <p className="mt-3 text-sm font-medium text-slate-500">
+                        Tu puntuación
+                    </p>
+                    <p className="mt-1 text-4xl font-bold text-slate-900">
+                        {score}{' '}
+                        <span className="text-lg font-normal text-slate-400">
+                            / {total}
+                        </span>
+                    </p>
+                    <p
+                        className={`mt-1 text-sm font-semibold ${isGood ? 'text-emerald-600' : 'text-slate-500'}`}
+                    >
+                        {percentage}%
+                    </p>
                 </div>
 
-                <div className="text-center mt-2">
-                    <h3 className="text-lg font-semibold mb-4">
-                        Tu puntuación ha sido de:
-                    </h3>
-                    <p className="text-2xl font-bold mb-4">
-                        {score} / {total}
-                    </p>
-                    <p className="mb-4">
-                        No olvides de comprobar tus respuestas una vez que{' '}
-                        <span className="font-semibold">cierres</span> la ventana. 😊
+                <div className="px-6 pb-6 pt-4 text-center">
+                    <p className="text-sm text-slate-500">
+                        Revisa tus respuestas para ver dónde puedes mejorar.
                     </p>
                     <button
                         type="button"
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+                        className="mt-4 w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-500"
                         onClick={onClose}
                     >
-                        Entendido
+                        Ver respuestas
                     </button>
                 </div>
             </div>

@@ -1,17 +1,21 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
-      },
+    content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: [
+                    'InterVariable',
+                    'Inter',
+                    'system-ui',
+                    '-apple-system',
+                    'sans-serif',
+                ],
+            },
+            maxWidth: {
+                content: '820px',
+            },
+        },
     },
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+    plugins: [],
 }

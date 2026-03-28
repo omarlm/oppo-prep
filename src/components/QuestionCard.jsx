@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
+import { CheckCircle2, XCircle } from 'lucide-react'
 
 const QuestionCard = ({
+    questionNumber,
     question,
     options,
     correctAnswer,
@@ -13,48 +15,99 @@ const QuestionCard = ({
         onAnswerSelect(event.target.value)
     }
 
+    const questionId = `question-${questionNumber}`
+    const isCorrect = userAnswer === correctAnswer
+
     return (
-        <div className={`avoid-page-break rounded-lg border border-gray-300 ${className}`}>
-            <div className="bg-blue-100 p-2 rounded-t-lg">
-                <h3 className="text-lg font-semibold">{question}</h3>
+        <div
+            className={`avoid-page-break overflow-hidden rounded-xl border bg-white shadow-sm transition-shadow hover:shadow-md ${
+                checked
+                    ? isCorrect
+                        ? 'border-emerald-200'
+                        : 'border-red-200'
+                    : 'border-slate-200'
+            } ${className || ''}`}
+        >
+            <div className="flex items-start gap-3 border-b border-slate-100 px-4 py-3.5 sm:px-5 sm:py-4">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
+                    {questionNumber}
+                </span>
+                <h3
+                    id={questionId}
+                    className="text-[15px] font-medium leading-relaxed text-slate-800"
+                >
+                    {question}
+                </h3>
             </div>
-            <div className="p-4">
-                <ul className="space-y-2">
-                    {Object.entries(options).map(([key, value]) => (
-                        <li key={key}>
-                            <label className="flex items-start space-x-2">
+
+            <fieldset
+                className="px-4 py-2.5 sm:px-5 sm:py-3"
+                aria-labelledby={questionId}
+            >
+                <legend className="sr-only">
+                    {questionNumber}. {question}
+                </legend>
+                <div className="space-y-1.5">
+                    {Object.entries(options).map(([key, value]) => {
+                        const isSelected = userAnswer === key
+                        const isCorrectOption = key === correctAnswer
+                        let optionStyle =
+                            'border-transparent hover:bg-slate-50 active:bg-slate-100'
+
+                        if (checked && isSelected && isCorrect) {
+                            optionStyle = 'border-emerald-200 bg-emerald-50'
+                        } else if (checked && isSelected && !isCorrect) {
+                            optionStyle = 'border-red-200 bg-red-50'
+                        } else if (checked && isCorrectOption) {
+                            optionStyle = 'border-emerald-200 bg-emerald-50/50'
+                        }
+
+                        return (
+                            <label
+                                key={key}
+                                className={`flex cursor-pointer items-start gap-3 rounded-lg border px-3 py-3 transition-colors sm:py-2.5 ${optionStyle} ${checked ? 'cursor-default' : ''}`}
+                            >
                                 <input
                                     type="radio"
-                                    name={question}
+                                    name={questionId}
                                     value={key}
                                     onChange={handleAnswerChange}
-                                    checked={userAnswer === key}
+                                    checked={isSelected}
                                     disabled={checked}
-                                    className="form-radio text-blue-600 mt-1"
+                                    className="mt-0.5 h-4 w-4 border-slate-300 text-indigo-600 focus:ring-indigo-500"
                                 />
-                                <span className="flex-1">
-                                    <span className='text-gray-900 font-bold'>{`${key}. `}</span>
+                                <span className="flex-1 text-[14px] leading-relaxed text-slate-700">
+                                    <span className="font-semibold text-slate-500">
+                                        {key}.{' '}
+                                    </span>
                                     {value}
                                 </span>
                             </label>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                        )
+                    })}
+                </div>
+            </fieldset>
 
             {checked && (
-                <div className="p-4">
-                    <p
-                        className={
-                            userAnswer === correctAnswer
-                                ? 'mt-2 p-2 font-bold text-green-700'
-                                : 'mt-2 p-2 font-bold text-red-700'
-                        }
-                    >
-                        {userAnswer === correctAnswer
-                            ? 'Respuesta correcta'
-                            : `Respuesta incorrecta. La respuesta correcta es: ${correctAnswer}`}
-                    </p>
+                <div
+                    className={`flex items-center gap-2 px-4 py-3 text-sm font-medium sm:px-5 ${
+                        isCorrect
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-red-50 text-red-700'
+                    }`}
+                    aria-live="polite"
+                >
+                    {isCorrect ? (
+                        <>
+                            <CheckCircle2 className="h-4 w-4 shrink-0" />
+                            Respuesta correcta
+                        </>
+                    ) : (
+                        <>
+                            <XCircle className="h-4 w-4 shrink-0" />
+                            Incorrecta — la respuesta es: {correctAnswer}
+                        </>
+                    )}
                 </div>
             )}
         </div>
@@ -62,13 +115,14 @@ const QuestionCard = ({
 }
 
 QuestionCard.propTypes = {
+    questionNumber: PropTypes.number.isRequired,
     question: PropTypes.string.isRequired,
-    options: PropTypes.object.isRequired,
+    options: PropTypes.objectOf(PropTypes.string).isRequired,
     correctAnswer: PropTypes.string.isRequired,
     userAnswer: PropTypes.string,
     checked: PropTypes.bool.isRequired,
     onAnswerSelect: PropTypes.func.isRequired,
-    className: PropTypes.string, // className es opcional, por eso no lleva isRequired
+    className: PropTypes.string,
 }
 
 export default QuestionCard
