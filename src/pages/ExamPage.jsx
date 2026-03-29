@@ -9,7 +9,7 @@ import { Loading } from '../components/Loading.jsx'
 import useTimer from '../hooks/useTimer'
 import usePersistedSession from '../hooks/usePersistedSession'
 import categories from '../config/categories'
-import { Printer, RefreshCw, PanelBottom, PanelRight } from 'lucide-react'
+import { Printer, RefreshCw } from 'lucide-react'
 
 const ExamPage = () => {
     const { categoryId } = useParams()
@@ -21,54 +21,54 @@ const ExamPage = () => {
     const [showModal, setShowModal] = useState(false)
     const [score, setScore] = useState(0)
     const [isLoading, setLoading] = useState(true)
+    const [isReloading, setReloading] = useState(false)
     const [error, setError] = useState(null)
     const [numQuestions, setNumQuestions] = useState(5)
     const [timerMinutes, setTimerMinutes] = useState(0)
-    const [barPosition, setBarPosition] = useState(() => {
-        try {
-            return localStorage.getItem('oppoprep-bar-position') || 'bottom'
-        } catch {
-            return 'bottom'
-        }
-    })
-
-    const toggleBarPosition = () => {
-        const next = barPosition === 'bottom' ? 'right' : 'bottom'
-        setBarPosition(next)
-        try {
-            localStorage.setItem('oppoprep-bar-position', next)
-        } catch {
-            // ignore
-        }
-    }
 
     const timer = useTimer(0)
     const { hasSavedSession, saveSession, loadSession, clearSession } =
         usePersistedSession(categoryId)
 
-    const fetchData = useCallback(async () => {
-        if (!category) return
-        setLoading(true)
-        setError(null)
-        const result = await getRandomQuestions(
-            category.dataFile,
-            numQuestions
-        )
-        if (result) {
-            setData(result)
-            setAnswers(
-                result.reduce(
-                    (acc, _, index) => ({ ...acc, [index]: null }),
-                    {}
-                )
+    const fetchData = useCallback(
+        async (reload = false) => {
+            if (!category) return
+            if (reload) {
+                setReloading(true)
+            } else {
+                setLoading(true)
+            }
+            setError(null)
+            const result = await getRandomQuestions(
+                category.dataFile,
+                numQuestions
             )
-            setChecked(false)
-            clearSession()
-        } else {
-            setError('No se pudieron cargar las preguntas.')
+            if (result) {
+                setData(result)
+                setAnswers(
+                    result.reduce(
+                        (acc, _, index) => ({ ...acc, [index]: null }),
+                        {}
+                    )
+                )
+                setChecked(false)
+                clearSession()
+            } else {
+                setError('No se pudieron cargar las preguntas.')
+            }
+            setLoading(false)
+            setReloading(false)
+        },
+        [numQuestions, category, clearSession]
+    )
+
+    // Re-fetch when numQuestions changes
+    useEffect(() => {
+        if (data.length > 0) {
+            fetchData(true)
         }
-        setLoading(false)
-    }, [numQuestions, category, clearSession])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [numQuestions])
 
     useEffect(() => {
         if (hasSavedSession) {
@@ -122,7 +122,7 @@ const ExamPage = () => {
 
     const refreshQuestions = () => {
         timer.reset(timerMinutes)
-        fetchData()
+        fetchData(true)
         scrollToTop()
     }
 
@@ -168,59 +168,49 @@ const ExamPage = () => {
             </h1>
 
             {/* Setup toolbar */}
-            <div className="no-print mt-4 mb-6 flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2 py-2 shadow-sm sm:gap-2 sm:px-3 sm:py-3">
-                <select
-                    value={numQuestions}
-                    onChange={(e) =>
-                        setNumQuestions(Number(e.target.value))
-                    }
-                    className="min-w-0 rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-300 focus:outline-none focus:ring-1 focus:ring-indigo-300"
-                    aria-label="Número de preguntas"
-                >
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={15}>15</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                </select>
-
-                <select
-                    value={timerMinutes}
-                    onChange={(e) =>
-                        handleTimerMinutesChange(Number(e.target.value))
-                    }
-                    disabled={
-                        timer.isRunning ||
-                        (timer.timeLeft > 0 &&
-                            timer.timeLeft < timerMinutes * 60)
-                    }
-                    className="min-w-0 rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-300 focus:outline-none focus:ring-1 focus:ring-indigo-300"
-                    aria-label="Temporizador"
-                >
-                    <option value={0}>Sin límite</option>
-                    <option value={5}>5 min</option>
-                    <option value={10}>10 min</option>
-                    <option value={15}>15 min</option>
-                    <option value={20}>20 min</option>
-                    <option value={30}>30 min</option>
-                    <option value={45}>45 min</option>
-                    <option value={60}>60 min</option>
-                </select>
-
-                <div className="ml-auto flex shrink-0 items-center">
-                    <button
-                        type="button"
-                        onClick={toggleBarPosition}
-                        className="hidden rounded-lg p-2.5 text-slate-400 transition-colors active:bg-slate-100 hover:bg-slate-100 hover:text-slate-600 sm:block"
-                        aria-label={`Mover barra de progreso ${barPosition === 'bottom' ? 'a la derecha' : 'abajo'}`}
+            <div className="no-print mt-4 mb-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 shadow-sm sm:px-3 sm:py-2.5">
+                <div className="flex items-center gap-1.5">
+                    <select
+                        value={numQuestions}
+                        onChange={(e) =>
+                            setNumQuestions(Number(e.target.value))
+                        }
+                        className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-300 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                        aria-label="Número de preguntas"
                     >
-                        {barPosition === 'bottom' ? (
-                            <PanelRight className="h-[18px] w-[18px]" />
-                        ) : (
-                            <PanelBottom className="h-[18px] w-[18px]" />
-                        )}
-                    </button>
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={15}>15</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                    <select
+                        value={timerMinutes}
+                        onChange={(e) =>
+                            handleTimerMinutesChange(
+                                Number(e.target.value)
+                            )
+                        }
+                        disabled={
+                            timer.isRunning ||
+                            (timer.timeLeft > 0 &&
+                                timer.timeLeft < timerMinutes * 60)
+                        }
+                        className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-300 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                        aria-label="Temporizador"
+                    >
+                        <option value={0}>Sin límite</option>
+                        <option value={5}>5 min</option>
+                        <option value={10}>10 min</option>
+                        <option value={15}>15 min</option>
+                        <option value={20}>20 min</option>
+                        <option value={30}>30 min</option>
+                        <option value={45}>45 min</option>
+                        <option value={60}>60 min</option>
+                    </select>
+                </div>
+                <div className="flex items-center">
                     <button
                         type="button"
                         onClick={() => window.print()}
@@ -241,7 +231,7 @@ const ExamPage = () => {
             </div>
 
             {/* Questions */}
-            <div className="space-y-4">
+            <div className={`space-y-4 transition-opacity duration-200 ${isReloading ? 'pointer-events-none opacity-40' : ''}`}>
                 {data.map((item, index) => (
                     <QuestionCard
                         key={item.id}
@@ -260,7 +250,6 @@ const ExamPage = () => {
 
             {/* Floating bar */}
             <FloatingBar
-                position={barPosition}
                 answeredCount={answeredCount}
                 totalCount={data.length}
                 allAnswered={allAnswered}
